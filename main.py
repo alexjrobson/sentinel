@@ -1,0 +1,1 @@
+print("Sentinel is alive")
