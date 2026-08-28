@@ -1,0 +1,26 @@
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+.pytest_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+node_modules/
+web/dist/
+web/.vite/
+
+.env
+# Runtime data at repo root only — do not ignore sentinel/data/
+/data/
+*.db
+*.bin
+!samples/high_entropy.bin
+.sentinel/
+
+.DS_Store
+Thumbs.db

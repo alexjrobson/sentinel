@@ -1,0 +1,2 @@
+Sentinel clean fixture.
+Nothing suspicious here — a normal notes file for a negative control.

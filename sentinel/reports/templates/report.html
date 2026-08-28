@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Sentinel report — {{ case.name }}</title>
+  <style>
+    :root { color-scheme: dark; }
+    body { font-family: "Segoe UI", system-ui, sans-serif; background: #0b1220; color: #e6edf7; margin: 0; padding: 32px; }
+    h1, h2 { font-weight: 600; }
+    h1 { color: #7ee0c6; margin-bottom: 4px; }
+    .meta { color: #9aa8c1; margin-bottom: 28px; }
+    .badge { display: inline-block; padding: 2px 8px; border-radius: 999px; font-size: 12px; margin-right: 6px; }
+    .critical { background: #7a1f2b; }
+    .high { background: #8a4b12; }
+    .medium { background: #6b5a12; }
+    .low { background: #1e4a5c; }
+    table { width: 100%; border-collapse: collapse; margin: 16px 0 32px; font-size: 13px; }
+    th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid #1e2a3f; vertical-align: top; }
+    th { color: #7ee0c6; font-weight: 500; }
+    code { font-family: Consolas, monospace; font-size: 12px; }
+    .attack { color: #8ab4ff; }
+  </style>
+</head>
+<body>
+  <h1>Sentinel forensic report</h1>
+  <p class="meta">
+    {{ product }} v{{ version }} · Case <strong>{{ case.name }}</strong> (id {{ case.id }})<br>
+    Target: <code>{{ case.target_path }}</code><br>
+    Created: {{ case.created_at }} · Files: {{ case.file_count }} · Findings: {{ case.finding_count }}
+  </p>
+
+  <h2>Findings</h2>
+  {% if not findings %}
+    <p>No security flags raised.</p>
+  {% else %}
+  <table>
+    <thead>
+      <tr><th>Sev</th><th>Rule</th><th>Title</th><th>ATT&amp;CK</th><th>Evidence</th><th>File</th></tr>
+    </thead>
+    <tbody>
+      {% for f in findings %}
+      <tr>
+        <td><span class="badge {{ f.severity }}">{{ f.severity }}</span></td>
+        <td><code>{{ f.rule_id }}</code></td>
+        <td>{{ f.title }}</td>
+        <td class="attack">
+          {% for t in f.attack %}{{ t.id }} {{ t.name }}{% if not loop.last %}<br>{% endif %}{% endfor %}
+        </td>
+        <td>{{ f.evidence }}</td>
+        <td><code>{{ f.file_path }}</code></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% endif %}
+
+  <h2>Evidence inventory</h2>
+  <table>
+    <thead>
+      <tr><th>Path</th><th>Size</th><th>SHA-256</th><th>Type</th><th>Entropy</th><th>Mismatch</th></tr>
+    </thead>
+    <tbody>
+      {% for file in files %}
+      <tr>
+        <td><code>{{ file.path }}</code></td>
+        <td>{{ file.size }}</td>
+        <td><code>{{ file.sha256 }}</code></td>
+        <td>{{ file.detected_type }} {{ file.extension }}</td>
+        <td>{{ file.entropy }}</td>
+        <td>{{ "yes" if file.magic_mismatch else "" }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <h2>MAC timeline</h2>
+  <table>
+    <thead><tr><th>Timestamp (UTC)</th><th>Event</th><th>Path</th></tr></thead>
+    <tbody>
+      {% for ev in timeline %}
+      <tr>
+        <td>{{ ev.timestamp }}</td>
+        <td>{{ ev.event }}</td>
+        <td><code>{{ ev.path }}</code></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</body>
+</html>

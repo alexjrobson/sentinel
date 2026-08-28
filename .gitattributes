@@ -1,2 +1,8 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+
+# EICAR hash must stay exact (no newline conversion)
+samples/eicar.com.txt binary
+samples/high_entropy.bin binary
+docs/screenshots/*.png binary
+

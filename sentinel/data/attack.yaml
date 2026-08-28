@@ -1,0 +1,85 @@
+rules:
+  eicar_test:
+    attack: ["T1204.002"]
+    severity: high
+    title: EICAR test file matched
+  hash_ioc:
+    attack: ["T1204"]
+    severity: critical
+    title: File hash matches local known-bad IOC
+  powershell_encoded:
+    attack: ["T1059.001"]
+    severity: high
+    title: PowerShell encoded-command / IEX tradecraft
+  cmd_interpreter:
+    attack: ["T1059.003"]
+    severity: medium
+    title: Command interpreter execution strings
+  vba_macro:
+    attack: ["T1566.001"]
+    severity: medium
+    title: Office/VBA auto-execution keywords
+  upx_packer:
+    attack: ["T1027.002"]
+    severity: medium
+    title: Packer (UPX) section hint
+  yara_hit:
+    attack: ["T1204"]
+    severity: medium
+    title: YARA rule matched
+  high_entropy:
+    attack: ["T1027"]
+    severity: medium
+    title: High Shannon entropy (packed or encrypted content)
+  extension_mismatch:
+    attack: ["T1036.008"]
+    severity: medium
+    title: Magic-byte type does not match file extension
+  suspicious_pe_imports:
+    attack: ["T1055", "T1105"]
+    severity: high
+    title: PE imports associated with injection or staging
+  powershell_strings:
+    attack: ["T1059.001"]
+    severity: high
+    title: PowerShell strings extracted from file
+  cmd_strings:
+    attack: ["T1059.003"]
+    severity: medium
+    title: cmd.exe / wscript strings extracted from file
+  embedded_urls:
+    attack: ["T1071.001"]
+    severity: low
+    title: Embedded URLs extracted from file
+  packed_and_yara:
+    attack: ["T1027.002", "T1204"]
+    severity: critical
+    title: YARA hit combined with high entropy
+  vt_malicious:
+    attack: ["T1204"]
+    severity: critical
+    title: VirusTotal reports the hash as malicious
+
+techniques:
+  T1027:
+    name: Obfuscated Files or Information
+  T1027.002:
+    name: Software Packing
+  T1036.008:
+    name: Masquerading — Match Legitimate Name or Location
+  T1055:
+    name: Process Injection
+  T1059.001:
+    name: Command and Scripting Interpreter — PowerShell
+  T1059.003:
+    name: Command and Scripting Interpreter — Windows Command Shell
+  T1071.001:
+    name: Application Layer Protocol — Web Protocols
+  T1105:
+    name: Ingress Tool Transfer
+  T1204:
+    name: User Execution
+  T1204.002:
+    name: User Execution — Malicious File
+  T1566.001:
+    name: Phishing — Spearphishing Attachment
