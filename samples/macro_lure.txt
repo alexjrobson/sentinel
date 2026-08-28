@@ -1,0 +1,12 @@
+REM Synthetic "suspicious" document strings for static analysis demos.
+AutoOpen
+Document_Open
+CreateObject("WScript.Shell")
+Shell("cmd.exe /c echo demo")
+powershell.exe -EncodedCommand ZGVtbw==
+Invoke-Expression
+FromBase64String
+HKLM\Software\Microsoft\Windows\CurrentVersion\Run
+http://example.invalid/payload
+user@example.invalid
+C:\Users\Public\payload.exe

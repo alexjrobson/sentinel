@@ -1,0 +1,53 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "sentinel"
+version = "0.1.0"
+description = "Local digital forensics workstation: file threat scanning, ATT&CK-mapped flags, encrypted investigator vault."
+readme = "README.md"
+requires-python = ">=3.12"
+license = { text = "MIT" }
+authors = [{ name = "Alex Robson" }]
+keywords = ["forensics", "dfir", "cybersecurity", "yara", "vault"]
+dependencies = [
+    "typer>=0.12",
+    "rich>=13.7",
+    "fastapi>=0.115",
+    "uvicorn[standard]>=0.30",
+    "filetype>=1.2",
+    "pefile>=2024.8.26",
+    "cryptography>=43.0",
+    "argon2-cffi>=23.1",
+    "pyyaml>=6.0",
+    "httpx>=0.27",
+    "jinja2>=3.1",
+    "python-multipart>=0.0.9",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0", "pytest-asyncio>=0.24"]
+yara = ["yara-python>=4.5"]
+
+[project.scripts]
+sentinel = "sentinel_cli.main:app"
+
+[project.urls]
+Homepage = "https://github.com/alexjrobson/sentinel"
+
+[tool.setuptools.packages.find]
+include = ["sentinel*", "sentinel_cli*", "sentinel_api*"]
+
+[tool.setuptools.package-data]
+sentinel = [
+    "data/rules/*.yar",
+    "data/*.yaml",
+    "data/*.json",
+    "reports/templates/*.html",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+addopts = "-q"
